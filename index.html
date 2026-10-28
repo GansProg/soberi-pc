@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Собери ПК — игра об устройстве компьютера</title>
+  <meta name="description" content="Обучающая игра по информатике для 5–7 классов: собери компьютер из деталей, подключи устройства и проверь сборку.">
+  <meta name="theme-color" content="#DDE4E7">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/onest-cyrillic-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/unbounded-cyrillic-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#app">Перейти к игре</a>
+
+  <header class="bar">
+    <div class="container bar-inner">
+      <a class="wordmark" href="#/" aria-label="Собери ПК, к списку миссий">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect x="1" y="1" width="30" height="30" rx="8" fill="var(--board)"/>
+          <rect x="10" y="10" width="12" height="12" rx="1.5" fill="none" stroke="var(--gold)" stroke-width="2"/>
+          <path d="M13 7v3M16 7v3M19 7v3M13 22v3M16 22v3M19 22v3M7 13h3M7 16h3M7 19h3M22 13h3M22 16h3M22 19h3" stroke="var(--silk)" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <span>Собери ПК</span>
+      </a>
+      <nav class="bar-nav" aria-label="Разделы">
+        <a href="#/" data-nav="home">Миссии</a>
+        <a href="#/results" data-nav="results">Мои результаты</a>
+      </nav>
+      <p class="rank" id="rank" aria-live="off"></p>
+    </div>
+  </header>
+
+  <main id="app" tabindex="-1">
+    <noscript>
+      <div class="container noscript">
+        <h1>Собери компьютер сам</h1>
+        <p>Игре нужен JavaScript. Включи его в настройках браузера и обнови страницу.</p>
+      </div>
+    </noscript>
+  </main>
+
+  <p class="visually-hidden" id="announcer" role="status" aria-live="polite"></p>
+
+  <dialog id="post" aria-labelledby="post-title">
+    <div class="bios">
+      <p class="bios-head" id="post-title">СОБЕРИ-ПК BIOS 1.0. Проверка оборудования</p>
+      <ol class="bios-lines" id="post-lines"></ol>
+    </div>
+    <div class="verdict" id="post-verdict"></div>
+  </dialog>
+
+  <footer class="foot">
+    <div class="container foot-inner">
+      <p>Собери ПК. Игра для уроков информатики в 5–7 классах.</p>
+      <p>Цены и характеристики деталей учебные и могут отличаться от магазинных.</p>
+    </div>
+  </footer>
+
+  <script src="game.js" defer></script>
+</body>
+</html>
