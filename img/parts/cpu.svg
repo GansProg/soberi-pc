@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><defs><pattern id="pads" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="3.2" height="3.2" fill="#D9A93F"/></pattern></defs><rect x="12" y="12" width="96" height="96" rx="5" fill="#2F6B4E" stroke="#1A2833" stroke-width="2"/>
+<rect x="18" y="16" width="84" height="6" fill="url(#pads)"/><rect x="18" y="98" width="84" height="6" fill="url(#pads)"/>
+<rect x="16" y="24" width="6" height="72" fill="url(#pads)"/><rect x="98" y="24" width="6" height="72" fill="url(#pads)"/>
+<path d="M32 28h56v8h6v48h-6v8H32v-8h-6V36h6z" fill="#C8CED3" stroke="#7E8992" stroke-width="2"/>
+<rect x="38" y="40" width="44" height="40" rx="3" fill="#D7DCE0"/>
+<rect x="44" y="52" width="32" height="4" rx="2" fill="#A9B2B9"/><rect x="44" y="61" width="22" height="4" rx="2" fill="#A9B2B9"/>
+<path d="M16 104v-9l9 9z" fill="#D9A93F"/></svg>

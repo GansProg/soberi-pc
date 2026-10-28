@@ -202,20 +202,20 @@
 
   // Motherboard places in percent of the board. m: narrow portrait board (5:6), d: wide landscape board (4:3)
   const MOBO_SLOTS = [
-    { id: 'cpu', accepts: ['cpu', 'cooler'], label: 'CPU', cls: 'slot-cpu', m: [26, 9, 30, 24], d: [18, 8, 28, 33],
+    { id: 'cpu', accepts: ['cpu', 'cooler'], label: 'CPU', cls: 'slot-cpu', m: [26, 9, 30, 24], d: [18, 6, 28, 33],
       desc: { kk: 'Процессор сокеті', ru: 'Сокет процессора' }, hint: { kk: 'процессор мен кулер', ru: 'процессор и кулер' } },
-    { id: 'ram', accepts: ['ram'], label: 'DIMM_A1', cls: 'slot-ram', m: [63, 6, 21, 40], d: [50, 6, 15, 52],
+    { id: 'ram', accepts: ['ram'], label: 'DIMM_A1', cls: 'slot-ram', m: [63, 6, 21, 40], d: [50, 4, 15, 51],
       desc: { kk: 'Жедел жады слоты', ru: 'Слот оперативной памяти' }, hint: { kk: 'жады', ru: 'память' } },
-    { id: 'ssd', accepts: ['ssd'], label: 'M.2_1', cls: 'slot-ssd', m: [26, 38, 32, 10], d: [18, 47, 28, 13],
+    { id: 'ssd', accepts: ['ssd'], label: 'M.2_1', cls: 'slot-ssd', m: [26, 38, 32, 10], d: [18, 44, 29, 14],
       desc: { kk: 'Жинақтағышқа арналған M.2 слоты', ru: 'Слот M.2 для накопителя' }, hint: { kk: 'жинақтағыш', ru: 'накопитель' } },
-    { id: 'gpu', accepts: ['gpu'], label: 'PCIE_X16', cls: 'slot-gpu', m: [7, 53, 77, 12], d: [5, 65, 70, 13],
+    { id: 'gpu', accepts: ['gpu'], label: 'PCIE_X16', cls: 'slot-gpu', m: [7, 53, 77, 12], d: [5, 62, 70, 15],
       desc: { kk: 'Бейнекартаға арналған PCIe слоты', ru: 'Слот PCIe для видеокарты' }, hint: { kk: 'бейнекарта', ru: 'видеокарта' } },
-    { id: 'psu', accepts: ['psu'], label: 'PSU', cls: 'slot-psu', m: [7, 72, 50, 21], d: [5, 82, 44, 14],
+    { id: 'psu', accepts: ['psu'], label: 'PSU', cls: 'slot-psu', m: [7, 72, 50, 21], d: [5, 81, 44, 15],
       desc: { kk: 'Қуат блогының бөлімі', ru: 'Отсек блока питания' }, hint: { kk: 'қуат блогы', ru: 'блок питания' } }
   ];
   const BOARD_SILK = {
     m: { model: [7, 3.2], socket: [26, 34], mem: [63, 47], power: [85, 84] },
-    d: { model: [5, 3], socket: [18, 42], mem: [50, 59], power: [86, 86] }
+    d: { model: [5, 2], socket: [18, 39.6], mem: [50, 55.6], power: [86, 86] }
   };
 
   const REAR_SLOTS = [
@@ -517,7 +517,8 @@
   const app = $('#app');
   const announcer = $('#announcer');
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const money = (n) => `${n.toLocaleString(locale())} ₸`;
+  // Kazakhstan groups thousands with a space in both languages: 450 000 ₸
+  const money = (n) => `${n.toLocaleString('ru-RU')} ₸`;
   function plural(n, one, few, many) {
     const a = Math.abs(n) % 100; const b = a % 10;
     if (a > 10 && a < 20) return many;
@@ -536,6 +537,8 @@
     `<span class="stars" role="img" aria-label="${esc(t('starsAria', n))}">${[0, 1, 2].map((i) => icon('star', i < n ? 'ic' : 'ic is-empty')).join('')}</span>`;
 
   const partIcon = (p) => (p.kind === 'device' ? p.icon : TYPES[p.type].icon);
+  // Drawings live in img/parts/<name>.svg; replace a file with a photo of the same name to swap it.
+  const partImg = (p, cls) => `<img class="${cls}" src="img/parts/${partIcon(p)}.svg" alt="" width="64" height="64" decoding="async" draggable="false">`;
   const pName = (p) => L(p.name);
   const pShort = (p) => L(p.short || p.name);
 
@@ -896,7 +899,7 @@
   }
 
   function chip(p) {
-    return `<span class="chip${p.pre ? ' is-pre' : ''}">${icon(partIcon(p))}<span class="chip-name">${esc(pShort(p))}</span></span>`;
+    return `<span class="chip${p.pre ? ' is-pre' : ''}">${partImg(p, 'chip-img')}<span class="chip-name">${esc(pShort(p))}</span></span>`;
   }
 
   function tracesFor(k) {
@@ -981,7 +984,7 @@
           <span class="bin-title">${esc(L(io.label))}</span>
           <span class="bin-sub">${esc(L(io.sub))}</span>
         </button>
-        <ul class="bin-items">${items.map((p) => `<li><button type="button" class="bin-item" data-remove="${p.id}" data-slot="${b.id}" data-key="item:${p.id}" aria-label="${esc(t('binItemAria', pName(p)))}">${icon(p.icon)}<span>${esc(pName(p))}</span></button></li>`).join('')}</ul>
+        <ul class="bin-items">${items.map((p) => `<li><button type="button" class="bin-item" data-remove="${p.id}" data-slot="${b.id}" data-key="item:${p.id}" aria-label="${esc(t('binItemAria', pName(p)))}">${partImg(p, 'bin-img')}<span>${esc(pName(p))}</span></button></li>`).join('')}</ul>
       </div>`;
     }).join('');
     return `<div class="bins-wrap${session.selected ? ' is-targeting' : ''}">
@@ -1011,7 +1014,7 @@
         meta = `<span class="part-meta"><span>${money(p.price)}</span><span>${p.capacity ? t('gives', p.capacity) : t('draws', p.watts)}</span></span>`;
       }
       return `<li><button type="button" class="part" data-part="${p.id}" data-key="part:${p.id}" aria-pressed="${session.selected === p.id}">
-        <span class="part-ic${isDev ? ' is-device' : ''}">${icon(partIcon(p))}</span>
+        <span class="part-ic">${partImg(p, 'part-img')}</span>
         <span class="part-text"><span class="part-name">${esc(pName(p))}</span><span class="part-spec">${esc(L(p.spec) || '')}</span>${meta}</span>
       </button></li>`;
     }).join('')}</ul>`;
@@ -1328,7 +1331,7 @@
       const p = partById(drag.id);
       const g = document.createElement('div');
       g.className = 'ghost';
-      g.innerHTML = `<span class="part-ic${p.kind === 'device' ? ' is-device' : ''}">${icon(partIcon(p))}</span><span>${esc(pName(p))}</span>`;
+      g.innerHTML = `<span class="part-ic">${partImg(p, 'part-img')}</span><span>${esc(pName(p))}</span>`;
       document.body.appendChild(g);
       drag.ghost = g;
       drag.btn.classList.add('is-lifted');

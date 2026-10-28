@@ -441,7 +441,7 @@ button { cursor: pointer; }
 
 .shelf-head h2 { font-size: 17px; }
 
-.shelf-head p { font-size: 15px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.shelf-head p { font-size: 15px; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 .shelf {
   list-style: none;
@@ -457,12 +457,12 @@ button { cursor: pointer; }
 .part {
   width: 100%;
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
+  grid-template-columns: 64px minmax(0, 1fr);
   gap: 14px;
   align-items: center;
   text-align: left;
-  padding: 10px 14px 10px 10px;
-  min-height: 68px;
+  padding: 8px 14px 8px 8px;
+  min-height: 80px;
   border-radius: var(--r-md);
   border: 2px solid transparent;
   background: var(--surface);
@@ -483,18 +483,17 @@ button { cursor: pointer; }
 .part.is-lifted { opacity: 0.4; }
 
 .part-ic {
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
   border-radius: var(--r-sm);
-  background: var(--board);
-  color: var(--silk);
+  background: var(--mat);
   display: grid;
   place-items: center;
 }
 
-.part-ic .ic { width: 28px; height: 28px; }
+.part-img { width: 56px; height: 56px; object-fit: contain; pointer-events: none; }
 
-.part-ic.is-device { background: var(--mat-2); color: var(--ink); }
+.part[aria-pressed="true"] .part-ic { background: var(--surface); }
 
 .part-text { display: grid; gap: 2px; min-width: 0; }
 
@@ -549,7 +548,10 @@ button { cursor: pointer; }
 .traces-d { display: none; }
 
 @container (min-width: 520px) {
-  .board-mobo { aspect-ratio: 4 / 3; }
+  .board-mobo { aspect-ratio: 7 / 6; }
+  .board-mobo .chip { padding: 4px 10px 4px 4px; font-size: 14px; }
+  .board-mobo .chip-img { width: 40px; height: 40px; }
+  .board-mobo .slot-ram .chip-img { width: 48px; height: 48px; }
   .board-mobo .slot,
   .board-mobo .silk { left: var(--dx); top: var(--dy); }
   .board-mobo .slot { width: var(--dw); height: var(--dh); }
@@ -632,9 +634,9 @@ button { cursor: pointer; }
   max-width: 100%;
 }
 
-.chip .ic { width: 18px; height: 18px; flex: none; }
+.chip-img { width: 24px; height: 24px; flex: none; object-fit: contain; }
 
-.chip-name { min-width: 0; overflow-wrap: anywhere; }
+.chip-name { min-width: 0; overflow-wrap: break-word; hyphens: auto; }
 
 .chip.is-pre { background: var(--metal); }
 
@@ -760,7 +762,9 @@ button { cursor: pointer; }
 
 .port-label { font-size: 14px; font-weight: 600; }
 
-.port .chip { background: var(--board); color: var(--silk); }
+.port .chip { background: var(--mat); color: var(--ink); flex-direction: column; gap: 4px; padding: 6px 8px; text-align: center; }
+
+.port .chip-img { width: 36px; height: 36px; }
 
 /* ---------- Bins ---------- */
 
@@ -826,7 +830,7 @@ button { cursor: pointer; }
   transition: background-color 150ms var(--ease-out);
 }
 
-.bin-item .ic { width: 20px; height: 20px; flex: none; }
+.bin-img { width: 32px; height: 32px; flex: none; object-fit: contain; }
 
 @media (hover: hover) {
   .bin-item:hover { background: var(--mat-2); }
@@ -853,7 +857,9 @@ button { cursor: pointer; }
   max-width: 260px;
 }
 
-.ghost .part-ic { width: 40px; height: 40px; }
+.ghost .part-ic { width: 48px; height: 48px; }
+
+.ghost .part-img { width: 42px; height: 42px; }
 
 body.is-dragging,
 body.is-dragging * { cursor: grabbing !important; user-select: none; }
@@ -1006,12 +1012,13 @@ td .stars .ic { width: 18px; height: 18px; }
   .mission-num { font-size: 22px; }
   .shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .part { grid-template-columns: minmax(0, 1fr); gap: 8px; align-items: start; padding: 10px; }
-  .part-ic { width: 40px; height: 40px; }
+  .part-ic { width: 56px; height: 56px; }
+  .part-img { width: 48px; height: 48px; }
   .slot { padding: 5px; gap: 4px; }
   .slot-label,
   .slot-hint { font-size: 11px; }
   .chip { font-size: 12px; padding: 3px 6px 3px 4px; }
-  .chip .ic { width: 15px; height: 15px; }
+  .chip-img { width: 20px; height: 20px; }
   .power-cap { width: 56px; height: 56px; }
   .power-cap .ic { width: 26px; height: 26px; }
   .power { font-size: 13px; }
