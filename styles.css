@@ -197,6 +197,34 @@ button { cursor: pointer; }
   font-variant-numeric: tabular-nums;
 }
 
+/* Language switch: two-option segmented control, top right */
+.lang {
+  display: inline-flex;
+  padding: 3px;
+  border-radius: var(--r-pill);
+  background: var(--mat-2);
+  flex: none;
+}
+
+.lang button {
+  min-width: 52px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 150ms var(--ease-out), color 150ms var(--ease-out);
+}
+
+.lang button[aria-pressed="true"] { background: var(--surface); color: var(--ink); }
+
+@media (hover: hover) {
+  .lang button[aria-pressed="false"]:hover { color: var(--ink); }
+}
+
 /* ---------- Buttons ---------- */
 
 .btn {
@@ -966,6 +994,10 @@ td .stars .ic { width: 18px; height: 18px; }
   .bar-inner { gap: 12px; min-height: 64px; flex-wrap: wrap; padding-block: 8px; }
   .wordmark span { font-size: 16px; }
   .bar-nav { order: 3; width: 100%; }
+  .bar-inner { gap: 10px; }
+  .rank strong,
+  .rank .rank-label { display: none; }
+  .lang button { min-width: 42px; min-height: 34px; padding: 0 8px; font-size: 14px; }
   .bar-nav a { padding: 6px 12px; }
   .player { grid-template-columns: minmax(0, 1fr); }
   .mission-row { grid-template-columns: 36px minmax(0, 1fr); gap: 8px 14px; padding: 16px; }
@@ -992,6 +1024,11 @@ td .stars .ic { width: 18px; height: 18px; }
   .bios-lines .v { text-align: left; }
   .verdict { padding: 20px 18px 22px; }
   .silk { font-size: 10px; }
+}
+
+@media (max-width: 400px) {
+  .rank { display: none; }
+  .lang { margin-left: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
